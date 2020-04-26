@@ -4,29 +4,18 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
+import ru.stqa.selenium.factory.WebDriverFactory;
 
 public class SecondTest {
 
     protected static WebDriver driver;
     private Logger logger = LogManager.getLogger(SecondTest.class);
-//    private DriverNames chrome = DriverNames.CHROME;
-//    private DriverNames fireFox = DriverNames.FIREFOX;
+
 
     @BeforeTest
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser) throws Exception {
-        if (browser.equalsIgnoreCase("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = DriverFactory.create(DriverNames.CHROME);
-            logger.info("Started with chrome");
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = DriverFactory.create(DriverNames.FIREFOX);
-            logger.info("Started with firefox");
-        } else {
-
-            throw new Exception("Browser is not correct");
-        }
+        driver = DriverFactory.create(browser);
     }
 
     @Test
